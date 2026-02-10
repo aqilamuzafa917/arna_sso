@@ -26,6 +26,13 @@ from .wa_views import (
     WAReverseSendOTPView,
 )
 
+from .passkeys_api_views import (
+    PasskeyRegisterBeginView,
+    PasskeyRegisterCompleteView,
+    PasskeyLoginBeginView,
+    PasskeyLoginCompleteView,
+)
+
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('me/', ManageUserView.as_view(), name='manage_user'),
@@ -56,4 +63,16 @@ urlpatterns = [
     path('wa/reverse/register-request/', WAReverseRegisterRequestView.as_view(), name='wa_reverse_register_request'),
     path('wa/reverse/send-otp/', WAReverseSendOTPView.as_view(), name='wa_reverse_send_otp'),
     # Note: verify endpoints use the same as regular WA (WAVerifyLinkView, WARegisterVerifyView, WAVerifyOTPView)
+    
+    # Passkeys API Endpoints
+    path('passkeys/register/begin/', PasskeyRegisterBeginView.as_view(), name='passkey_register_begin'),
+    path('passkeys/register/complete/', PasskeyRegisterCompleteView.as_view(), name='passkey_register_complete'),
+    path('passkeys/login/begin/', PasskeyLoginBeginView.as_view(), name='passkey_login_begin'),
+    path('passkeys/login/complete/', PasskeyLoginCompleteView.as_view(), name='passkey_login_complete'),
+    
+    # Check if user has passkeys enabled (optional utility)
+    # path('passkeys/check/', ..., name='passkey_check'),
+    
+    # Include standard passkeys urls if needed for other built-in features (e.g. key management)
+    # url(r'^passkeys/', include('passkeys.urls')),
 ]

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'oauth_provider',
     'drf_yasg',
     'django_q',
+    'passkeys',
 ]
 
 # Optional: Add gRPC framework only if installed
@@ -152,6 +153,16 @@ STATICFILES_FINDERS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.User'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default Backend (for email/password)
+    # 'passkeys.backend.PasskeyModelBackend',  # Disabled: Our API views handle passkeys directly
+]
+
+import passkeys
+FIDO_SERVER_ID = "localhost"  # TODO: Change to your domain in production
+FIDO_SERVER_NAME = "Arna SSO"
+KEY_ATTACHMENT = passkeys.Attachment.CROSS_PLATFORM
 
 SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,
